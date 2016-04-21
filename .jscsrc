@@ -1,0 +1,15 @@
+{
+	"preset": "jquery",
+	"requireArrowFunctions": true, // arrow functions are much better for anonymous functions
+	"disallowFunctionDeclarations": true, // use arrow functions and class instead
+	"disallowVar": true, // use const and let
+	"requireSemicolons": false, // this is caught by jshint
+	"validateQuoteMarks" : false, // this is caught by jshint
+	"requireSpacesInsideParentheses" : false,
+	"requireSpacesInsideBrackets" : false,
+	"requireSpacesInsideObjectBrackets": false,
+	"disallowTabs" : true,
+	"maximumLineLength": 120,
+	"requirePaddingNewLinesBeforeLineComments": false,
+	"esnext": true
+}
