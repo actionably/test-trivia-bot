@@ -15,7 +15,7 @@ class StartUp {
       process.env.NODE_ENV = 'development';
     }
     console.log(`STARTING ${this.name}: NODE_ENV = ${process.env.NODE_ENV}`.green.inverse);
-    const dbUrl = process.env.MONGOLAB_URI || `mongodb://localhost/test-trivia-bot-${process.env.NODE_ENV}`;
+    const dbUrl = process.env.MONGODB_URI || `mongodb://localhost/test-trivia-bot-${process.env.NODE_ENV}`;
 
     return dbConnection.connectAndLoadModels(dbUrl)
       .then(this.doStartup.bind(this))
