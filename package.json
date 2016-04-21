@@ -15,7 +15,8 @@
   "dependencies": {
     "babel-cli": "6.6.5",
     "babel-preset-stage-3": "6.5.0",
-		"colors": "0.6.2",
+    "body-parser": "1.15.0",
+    "colors": "0.6.2",
     "express": "4.13.4",
     "foreman": "1.4.1",
     "lodash": "4.11.1",
