@@ -19,6 +19,20 @@ class WebserverStartUp extends StartUp {
       }
       res.send('Error, wrong validation token');
     });
+    ws.post('/webhook/', (req, res) => {
+      const messagingEvents = req.body.entry[0].messaging;
+      for (let i = 0; i < messagingEvents.length; i++) {
+        const event = req.body.entry[0].messaging[i];
+        const sender = event.sender.id;
+        if (event.message && event.message.text) {
+          const text = event.message.text;
+          console.log(text);
+          // Handle a text message from this sender
+        }
+      }
+      res.sendStatus(200);
+    });
+
     this.configureWebserver(ws);
     ws.listen(process.env.PORT);
   }
