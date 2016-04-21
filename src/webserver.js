@@ -12,6 +12,13 @@ class WebserverStartUp extends StartUp {
     ws.route('/').get((req, res) => {
       res.send('Hello');
     });
+    ws.get('/webhook/', (req, res) => {
+      if (req.query['hub.verify_token'] === 'rfz24ITFHDz1YEwQmS9Z') {
+        res.send(req.query['hub.challenge']);
+        return;
+      }
+      res.send('Error, wrong validation token');
+    });
     this.configureWebserver(ws);
     ws.listen(process.env.PORT);
   }
