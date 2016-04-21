@@ -10,6 +10,7 @@ class WebserverStartUp extends StartUp {
   }
   doStartup() {
     const ws = express();
+    ws.use(bodyParser.json()); // For parsing application/json
     ws.route('/').get((req, res) => {
       res.send('Hello');
     });
@@ -39,7 +40,6 @@ class WebserverStartUp extends StartUp {
   }
 
   configureWebserver(ws) {
-    ws.use(bodyParser.json()); // For parsing application/json
 
     // Error handling.
     ws.use((err, req, res, next) =>  {
