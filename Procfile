@@ -1,2 +1,2 @@
-web: node --es_staging --harmony-proxies build/webserver.js
+web: node --es_staging --harmony-proxies src/bkwebserver.js
 

@@ -54,6 +54,15 @@ module.exports = function(grunt) {
           watch: 'src/**/*.js',
           exec: './node_modules/.bin/babel-node --presets stage-3 --es_staging --harmony_proxies --debug=5858'
         }
+      },
+      bkWebserver: {
+        script: 'src/bkwebserver.js',
+        options: {
+          env: env,
+          ext: 'js,html',
+          watch: 'src/**/*.js',
+          exec: './node_modules/.bin/babel-node --presets stage-3 --es_staging --harmony_proxies --debug=5858'
+        }
       }
     },
     concurrent: {
@@ -72,4 +81,5 @@ module.exports = function(grunt) {
 
   // Default task(s).
   grunt.registerTask('default', ['jshint', 'jscs', 'concurrent:default']);
+  grunt.registerTask('bk', ['nodemon:bkWebserver']);
 };

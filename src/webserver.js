@@ -3,6 +3,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const StartUp = require('./util/start-up.js');
+const request = require('request');
+const actionably = require('./actionably')('TEST_KEY');
 
 class WebserverStartUp extends StartUp {
   constructor() {
@@ -14,29 +16,47 @@ class WebserverStartUp extends StartUp {
     ws.route('/').get((req, res) => {
       res.send('Hello');
     });
-    ws.get('/webhook/', (req, res) => {
+    ws.get('/facebook/receive/', (req, res) => {
       if (req.query['hub.verify_token'] === 'rfz24ITFHDz1YEwQmS9Z') {
         res.send(req.query['hub.challenge']);
         return;
       }
       res.send('Error, wrong validation token');
     });
-    ws.post('/webhook/', (req, res) => {
-      console.log(req.body);
+    ws.post('/facebook/receive/', (req, res) => {
+      actionably.logIncoming(req.body);
       const messagingEvents = req.body.entry[0].messaging;
       for (let i = 0; i < messagingEvents.length; i++) {
         const event = req.body.entry[0].messaging[i];
         const sender = event.sender.id;
         if (event.message && event.message.text) {
           const text = event.message.text;
-          console.log(text);
-          // Handle a text message from this sender
+          setTimeout(() => this.sendTextMessage(sender, text), 10000);
         }
       }
       res.sendStatus(200);
     });
 
     this.configureWebserver(ws);
+  }
+
+  sendTextMessage(sender, text) {
+    const messageData = {
+      text:'You are right when you say: ' + text
+    };
+    const data = {
+      recipient: {id:sender},
+      message: messageData
+    };
+    actionably.logOutgoing(data);
+    request({
+      url: 'https://graph.facebook.com/v2.6/me/messages',
+      qs: {access_token:process.env.FACEBOOK_PAGE_TOKEN}, //jscs:ignore
+      method: 'POST',
+      json: data
+    }, (error, response, body) => {
+      actionably.logOutgoingResponse(error, response);
+    });
   }
 
   configureWebserver(ws) {
