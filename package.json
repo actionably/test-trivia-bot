@@ -20,6 +20,7 @@
     "colors": "0.6.2",
     "express": "4.13.4",
     "foreman": "1.4.1",
+    "glob": "7.0.3",
     "lodash": "4.11.1",
     "mongoose": "4.4.12",
     "mongoose-timestamp": "0.5.0",
