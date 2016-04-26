@@ -52,16 +52,7 @@ module.exports = function(grunt) {
           env: env,
           ext: 'js,html',
           watch: 'src/**/*.js',
-          exec: './node_modules/.bin/babel-node --presets stage-3 --es_staging --harmony_proxies --debug=5858'
-        }
-      },
-      bkWebserver: {
-        script: 'src/bkwebserver.js',
-        options: {
-          env: env,
-          ext: 'js,html',
-          watch: 'src/**/*.js',
-          exec: './node_modules/.bin/babel-node --presets stage-3 --es_staging --harmony_proxies --debug=5858'
+          exec: './node_modules/.bin/babel-node --presets stage-3 --es_staging --harmony_proxies --debug=5850'
         }
       }
     },

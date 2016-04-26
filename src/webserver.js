@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const StartUp = require('./util/start-up.js');
 const request = require('request');
-const actionably = require('./actionably')('TEST_KEY');
+const actionably = require('./actionably')('6X9AuMDJv9anq0bSgm9fefDLDHvA5Z1vbxtjM8Nf');
 
 class WebserverStartUp extends StartUp {
   constructor() {
@@ -31,7 +31,7 @@ class WebserverStartUp extends StartUp {
         const sender = event.sender.id;
         if (event.message && event.message.text) {
           const text = event.message.text;
-          setTimeout(() => this.sendTextMessage(sender, text), 10000);
+          this.sendTextMessage(sender, text);
         }
       }
       res.sendStatus(200);
