@@ -1,6 +1,7 @@
 'use strict';
 
 const rp = require('request-promise');
+const uuid = require('node-uuid');
 
 class Actionably {
   constructor(apiKey) {
@@ -10,7 +11,7 @@ class Actionably {
     console.log('Incoming');
     console.log(JSON.stringify(data, null, 2));
     rp({
-      uri: `http://localhost:3000/track?apiKey=${this.apiKey}&type=incoming`,
+      uri: `http://localhost:3000/track?apiKey=${this.apiKey}&type=incoming&platform=facebook`,
       method: 'POST',
       json: data
     });
@@ -18,22 +19,28 @@ class Actionably {
   logOutgoing(data) {
     console.log('Outgoing');
     console.log(JSON.stringify(data, null, 2));
+    const requestId = uuid.v4();
     rp({
-      uri: `http://localhost:3000/track?apiKey=${this.apiKey}&type=outgoing`,
+      uri: `http://localhost:3000/track?apiKey=${this.apiKey}&type=outgoing&platform=facebook`,
       method: 'POST',
-      json: data
+      json: {
+        requestBody: data,
+        requestId: requestId
+      }
     });
+    return requestId;
   }
-  logOutgoingResponse(error, response) {
+  logOutgoingResponse(requestId, error, response) {
     console.log('Outgoing response');
     console.log(JSON.stringify(error, null, 2));
     console.log(JSON.stringify(response.body, null, 2));
     rp({
-      uri: `http://localhost:3000/track?apiKey=${this.apiKey}&type=outgoingResponse`,
+      uri: `http://localhost:3000/track?apiKey=${this.apiKey}&type=outgoingResponse&platform=facebook`,
       method: 'POST',
       json: {
         error: error,
-        responseBody: response.body
+        responseBody: response.body,
+        requestId: requestId
       }
     });
   }

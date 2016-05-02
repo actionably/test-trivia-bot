@@ -48,14 +48,14 @@ class WebserverStartUp extends StartUp {
       recipient: {id:sender},
       message: messageData
     };
-    actionably.logOutgoing(data);
+    const requestId = actionably.logOutgoing(data);
     request({
       url: 'https://graph.facebook.com/v2.6/me/messages',
       qs: {access_token:process.env.FACEBOOK_PAGE_TOKEN}, //jscs:ignore
       method: 'POST',
       json: data
     }, (error, response, body) => {
-      actionably.logOutgoingResponse(error, response);
+      actionably.logOutgoingResponse(requestId, error, response);
     });
   }
 
